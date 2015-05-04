@@ -3,3 +3,5 @@
 .settings
 WebContent/WEB-INF/lib/**
 build/**
+*.iml
+.idea/
