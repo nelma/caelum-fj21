@@ -1,15 +1,9 @@
-package br.com.caelum.servlet;
+package br.com.caelum.mvc.logica;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,12 +12,12 @@ import com.mysql.jdbc.Connection;
 import br.com.caelum.agenda.dao.ContatoDao;
 import br.com.caelum.agenda.modelo.Contato;
 
-@WebServlet("/adicionaContato")
-public class AdicionaContatoServlet extends HttpServlet {
+public class AlteraContatoLogic implements Logica {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		PrintWriter out = response.getWriter();
-		
+	@Override
+	public String executa(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
 		//pegando os params do request
 		String nome = request.getParameter("nome");
 		String email = request.getParameter("email");
@@ -38,8 +32,9 @@ public class AdicionaContatoServlet extends HttpServlet {
 			dataNascimento = Calendar.getInstance();
 			dataNascimento.setTime(date);
 		} catch (Exception e) {
-			out.println("Erro de conversao da data.");
-			return;
+			System.out.println("Erro de conversao da data." + e);
+			System.out.println(dataEmTexto);
+			return dataEmTexto;
 		}
 		
 		Contato contato = new Contato();
@@ -51,16 +46,10 @@ public class AdicionaContatoServlet extends HttpServlet {
 		//Salva cnntato
 		Connection connection = (Connection) request.getAttribute("conexao");
 		ContatoDao dao = new ContatoDao(connection);
-		dao.adiciona(contato);
+		dao.atualiza(contato);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/contato-adicionado.jsp");
-		rd.forward(request, response);
-		
-		//Imprime o nome do contato que foi adicionado
-		/*out.println("<html>");
-		out.println("<body>");
-		out.println("Contato " + contato.getNome() + " adicionado com sucesso");
-		out.println("</body>");
-		out.println("</html>");*/
+		return null;
 	}
+	
+
 }
