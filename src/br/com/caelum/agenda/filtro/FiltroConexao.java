@@ -28,10 +28,15 @@ public class FiltroConexao implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		
 		try {
+			//abre a conexao
 			Connection connection = (Connection) new ConnectionFactory().getConnection();
 			
 			request.setAttribute("conexao", connection);
+			
+			//indica que o request deve seguir
 			chain.doFilter(request, response);
+			
+			//fecha conexao
 			connection.close();
 		} catch (Exception e) {
 			throw new ServletException(e);

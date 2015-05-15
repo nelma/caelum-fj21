@@ -40,6 +40,7 @@
               
         </display:table> 
 		 -->
+		 <A href="mvc?logica=AdicionaContatoLogic">Adiciona Contato</A>
 		 
 		<table class="table">
 			<thead>

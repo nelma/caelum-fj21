@@ -26,6 +26,6 @@ public class EditaContatoLogic implements Logica {
 		System.out.println("Edita contato...");
 		request.setAttribute("contato", contato);
 		
-		return "edita-contato.jsp";
+		return "WEB-INF/jsp/edita-contato.jsp";
 	}
 }
